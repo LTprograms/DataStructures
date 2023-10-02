@@ -210,4 +210,45 @@ public class ArrayList implements List {
     public int tail() {
         return size==0 ? -1 : array[size-1];
     }    
+
+    @Override
+    public int min() {
+        if (size==0) {
+            return 0;
+        }
+        int min = array[0];
+        for (int i = 0; i < size; i++) {
+            if (array[i]<min) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    @Override
+    public int max() {
+        if (size==0) {
+            return 0;
+        }
+        int max = array[0];
+        for (int i = 0; i < size; i++) {
+            if (array[i]>max) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+    
+    @Override
+    public void insertSorted(int element) {
+        int[] aux = new int[size+1];
+        int index = -1;
+        for (int i = 0; i < size; i++) {
+            if (array[i+1]>element) {
+                index = i;
+                break;
+            }
+            aux[i] = array[i];
+        }
+    }
 }

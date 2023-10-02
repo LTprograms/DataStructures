@@ -13,6 +13,7 @@ public interface List {
     public void insert(int element, int index);
     public void append(int element);
     public void prepend(int element);
+    public void insertSorted(int element);
     //delete
     public void pop();
     public void remove(int element);
@@ -26,6 +27,8 @@ public interface List {
     public int indexOf(int element);
     public int head();
     public int tail();
+    public int min();
+    public int max();
     //operations
     public void sort(boolean reverse);    
 }

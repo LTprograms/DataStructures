@@ -10,19 +10,14 @@ import node.Node;
  *
  * @author usuario
  */
-public class LinkedList implements List {
+public class DoubleLinkedList implements List {
     private Node first;
     private Node last;
     private int size;
-
-    public LinkedList() {
-        first = last = null;
-        size = 0;
-    }
     
     @Override
     public void insert(int element, int index) {
-        if (index<0 || index>size) {
+        if (index>=size && index<0) {
             return;
         }
         if (index==0) {
@@ -44,6 +39,8 @@ public class LinkedList implements List {
                 i++;
             }    
             n.setNext(aux.getNext());
+            n.setPrevious(aux);
+            aux.getNext().setPrevious(n);
             aux.setNext(n);            
         }
         size++;
@@ -52,9 +49,10 @@ public class LinkedList implements List {
     @Override
     public void append(int element) {
         Node n = new Node(element);
-        if (size==0) {
+        if (first==null) {
             first = last = n;
         } else {
+            n.setPrevious(last);
             last.setNext(n);
             last = n;
         }
@@ -64,13 +62,19 @@ public class LinkedList implements List {
     @Override
     public void prepend(int element) {
         Node n = new Node(element);
-        if (size==0) {
+        if (first == null) {
             first = last = n;
         } else {
             n.setNext(first);
+            first.setPrevious(n);
             first = n;
         }
         size++;
+    }
+
+    @Override
+    public void insertSorted(int element) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -79,11 +83,8 @@ public class LinkedList implements List {
             if (first==last) {
                 first = last = null;
             } else{
-                Node aux = first;
-                while (aux.getNext().getNext()!=null) {
-                    aux = aux.getNext();
-                }
-                aux.setNext(null);
+                last = last.getPrevious(); 
+                last.setNext(null);
             }
             size--;
         }
@@ -106,6 +107,7 @@ public class LinkedList implements List {
             }
             if (aux.getNext()!=null) {
                 aux.setNext(aux.getNext().getNext());
+                aux.getNext().setPrevious(aux);
                 size--;
             }
         }
@@ -133,6 +135,7 @@ public class LinkedList implements List {
             }
             if (aux.getNext()!=null) {
                 aux.setNext(aux.getNext().getNext());
+                aux.getNext().setPrevious(aux);
                 size--;
             }
         }
@@ -145,6 +148,7 @@ public class LinkedList implements List {
                 first = last = null;
             } else {
                 first = first.getNext();
+                first.setPrevious(null);
             }
             size--;
         }
@@ -190,39 +194,17 @@ public class LinkedList implements List {
                 i++;
             }
             return -1;
-        }        
+        }   
     }
 
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return first==null;
     }
 
     @Override
     public int lenght() {
         return size;
-    }
-
-    @Override
-    public void sort(boolean reverse) {
-        LinkedList sortedList = new LinkedList();
-        
-    }
-    
-
-    @Override
-    public String toString() {
-        if (first==null) {
-            return "[]";
-        }
-        String txt = "[";
-        Node aux = first;
-        while (aux.getNext()!=null) {
-            txt += aux.getNumber() + " ";
-            aux = aux.getNext();
-        }
-        txt += aux.getNumber() + "]";
-        return txt;
     }
 
     @Override
@@ -261,39 +243,32 @@ public class LinkedList implements List {
 
     @Override
     public int min() {
-        if (size==0) {
-            return 0;
-        }
-        int min = first.getNumber();
-        Node aux = first;
-        while (aux!=null) {
-            if (min>aux.getNumber()) {
-                min = aux.getNumber();
-            }
-            aux = aux.getNext();
-        }
-        return min;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public int max() {
-        if (size==0) {
-            return 0;
-        }
-        int max = first.getNumber();
-        Node aux = first;
-        while (aux!=null) {
-            if (max<aux.getNumber()) {
-                max = aux.getNumber();
-            }
-            aux = aux.getNext();
-        }
-        return max;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void insertSorted(int element) {
+    public void sort(boolean reverse) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String toString() {
+        if (first==null) {
+            return "[]";
+        }
+        String txt = "[";
+        Node aux = first;
+        while (aux.getNext()!=null) {
+            txt += aux.getNumber() + " ";
+            aux = aux.getNext();
+        }
+        txt += aux.getNumber() + "]";
+        return txt;
     }
     
 }
